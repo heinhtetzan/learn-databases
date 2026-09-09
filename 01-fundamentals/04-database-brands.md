@@ -2,7 +2,7 @@
 
 # 1.4 Database Brands
 
-In [Lesson 1.3](03-types-of-databases.md) we covered the 5 *types* of
+In [Lesson 1.3](03-types-of-databases.md) we covered the 6 *types* of
 databases. Now let's meet the actual products — the "brands" — you'll
 encounter in real jobs and projects. One step at a time.
 
@@ -56,11 +56,25 @@ use. Two important labels you'll see attached to every brand:
 | **Neo4j** | Neo4j Inc. | The most widely used graph database |
 | **Amazon Neptune** | Amazon (AWS) | Fully managed graph database |
 
-## Step 7 — See them all grouped together
+## Step 7 — Vector brands (for AI/ML)
+
+| Brand | Made by | Known for |
+|---|---|---|
+| **Pinecone** | Pinecone Systems | Fully managed, one of the most popular for AI apps |
+| **Weaviate** | Weaviate B.V. (open-source) | Open-source, built-in hybrid (keyword + vector) search |
+| **Milvus** | Zilliz (open-source) | Open-source, built for very large-scale vector search |
+| **pgvector** | Open-source | Not a separate database — an extension that adds vector search *into PostgreSQL* |
+| **Chroma** | Open-source | Lightweight, popular for local AI prototypes |
+
+> `pgvector` is worth remembering specifically: it means you don't always need
+> a brand-new database just to add AI features — you can add vector search
+> directly to a PostgreSQL database you're already using.
+
+## Step 8 — See them all grouped together
 
 ![Database Brands, Grouped by Type](../assets/images/database-brands.png)
 
-## Step 8 — A simple rule for picking a brand, not just a type
+## Step 9 — A simple rule for picking a brand, not just a type
 
 Once you know the *type* you need ([Lesson 1.3](03-types-of-databases.md)),
 picking a specific brand usually comes down to:

@@ -21,6 +21,7 @@ flowchart TD
     NOSQL --> DOC[Document]
     NOSQL --> COL[Column-Family]
     NOSQL --> GRAPH[Graph]
+    NOSQL --> VEC[Vector]
 ```
 
 ## Step 2 — Relational (SQL)
@@ -66,11 +67,30 @@ reconstructed from IDs like in relational tables.
 **Best for**: questions that are really about connections — "who knows who,"
 "what influenced what."
 
-## Step 7 — Picture all five together
+## Step 7 — Vector
 
-![5 Common Types of Databases](../assets/images/database-types-overview.png)
+This one's newer, and exists specifically for **AI/ML**. An AI model turns
+text, images, or audio into a list of numbers called an **embedding** (or
+"vector") — numbers that capture *meaning*, so similar things end up as
+similar numbers. A vector database stores millions of these embeddings and
+answers one specific question extremely fast: **"which stored items are most
+similar to this one?"**
 
-## Step 8 — Quick recap table
+**Best for**: AI features — semantic search ("find documents *about* this
+topic," not just matching exact words), recommendation systems, chatbots that
+need to recall relevant facts (a pattern called **RAG** — Retrieval-Augmented
+Generation).
+
+## Step 8 — Picture all six together
+
+![6 Common Types of Databases](../assets/images/database-types-overview.png)
+
+Notice the Vector panel: dots represent stored embeddings, the star is a new
+"query," and the dashed lines connect it to its **nearest neighbors** — the
+most similar matches. That "find what's nearby" idea is the entire point of a
+vector database.
+
+## Step 9 — Quick recap table
 
 | Type | Stores data as | Best for |
 |---|---|---|
@@ -79,6 +99,7 @@ reconstructed from IDs like in relational tables.
 | Document | Nested JSON-like records | Flexible, varying-shape data |
 | Column-Family | Sparse columns per row | Massive write volume |
 | Graph | Nodes + edges | Relationship-heavy questions |
+| Vector | Embeddings (lists of numbers) | AI/ML similarity search |
 
 This course focuses mainly on **Relational (SQL)** first, since it's the most
 widely used foundation — the other types get their own deeper lessons later.

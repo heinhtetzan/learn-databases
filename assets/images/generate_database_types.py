@@ -1,5 +1,5 @@
 """
-Generates the "5 types of databases" overview chart for Lesson 1.3.
+Generates the "6 types of databases" overview chart for Lesson 1.3.
 Run: python3 generate_database_types.py
 """
 import matplotlib
@@ -16,9 +16,10 @@ TEAL = "#2a9d8f"
 ORANGE = "#e76f51"
 GOLD = "#e9c46a"
 PURPLE = "#8e6db5"
+CRIMSON = "#c9184a"
 GREY = "#6c757d"
 
-fig, axes = plt.subplots(1, 5, figsize=(19, 4.6))
+fig, axes = plt.subplots(1, 6, figsize=(22.5, 4.6))
 
 # ---------------------------------------------------------------------------
 # Panel 1: Relational (SQL)
@@ -127,7 +128,30 @@ for name, (x,y) in nodes.items():
 ax.set_title("Graph", fontsize=12.5, fontweight="bold", color=NAVY, pad=10)
 ax.text(3, 0.4, "Relationships are\nstored directly", ha="center", fontsize=8.5, color=GREY)
 
-fig.suptitle("5 Common Types of Databases", fontsize=16, fontweight="bold", color=NAVY, y=1.06)
+# ---------------------------------------------------------------------------
+# Panel 6: Vector (for AI / ML — similarity search over embeddings)
+# ---------------------------------------------------------------------------
+ax = axes[5]
+ax.set_xlim(0, 6); ax.set_ylim(0, 6); ax.axis("off")
+random.seed(11)
+# a cloud of "embedding" points
+cloud = [(random.uniform(0.8, 5.2), random.uniform(0.9, 5.1)) for _ in range(22)]
+for x, y in cloud:
+    ax.scatter([x], [y], s=28, color="#d9c7cf", edgecolor=CRIMSON, linewidth=0.6, zorder=1)
+
+query = (3.0, 3.0)
+neighbors = sorted(cloud, key=lambda p: (p[0]-query[0])**2 + (p[1]-query[1])**2)[:4]
+for nx, ny in neighbors:
+    ax.plot([query[0], nx], [query[1], ny], color=CRIMSON, lw=1.1, linestyle="--", zorder=1)
+    ax.scatter([nx], [ny], s=55, color=CRIMSON, edgecolor=NAVY, linewidth=0.8, zorder=2)
+
+ax.scatter([query[0]], [query[1]], s=140, color=NAVY, edgecolor=NAVY, marker="*", zorder=3)
+ax.text(query[0], query[1]+0.55, "query", ha="center", fontsize=8, color=NAVY, fontweight="bold")
+
+ax.set_title("Vector", fontsize=12.5, fontweight="bold", color=NAVY, pad=10)
+ax.text(3, 0.4, "Finds the closest\nmatches by meaning", ha="center", fontsize=8.5, color=GREY)
+
+fig.suptitle("6 Common Types of Databases", fontsize=16, fontweight="bold", color=NAVY, y=1.06)
 plt.tight_layout()
 plt.savefig("database-types-overview.png", dpi=150, bbox_inches="tight", facecolor="white")
 plt.close()

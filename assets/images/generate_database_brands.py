@@ -18,16 +18,19 @@ GOLD = "#e9c46a"
 PURPLE = "#8e6db5"
 GREY = "#6c757d"
 
+CRIMSON = "#c9184a"
+
 columns = [
     ("Relational (SQL)", BLUE, ["PostgreSQL", "MySQL", "SQL Server", "Oracle DB", "SQLite"]),
     ("Key-Value", GOLD, ["Redis", "DynamoDB", "Memcached"]),
     ("Document", ORANGE, ["MongoDB", "Couchbase"]),
     ("Column-Family", PURPLE, ["Cassandra", "HBase"]),
     ("Graph", TEAL, ["Neo4j", "Neptune"]),
+    ("Vector", CRIMSON, ["Pinecone", "Weaviate", "Milvus", "pgvector", "Chroma"]),
 ]
 
-fig, ax = plt.subplots(figsize=(15.6, 6.5))
-ax.set_xlim(0, 15.9); ax.set_ylim(0, 7); ax.axis("off")
+fig, ax = plt.subplots(figsize=(18.4, 6.5))
+ax.set_xlim(0, 18.7); ax.set_ylim(0, 7); ax.axis("off")
 
 col_w = 2.7
 gap = 0.35
