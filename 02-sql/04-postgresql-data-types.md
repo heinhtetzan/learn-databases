@@ -24,45 +24,106 @@ A column's type controls 3 things at once:
 
 ### Numeric
 
-| Type | Use for |
-|---|---|
-| `INTEGER` | Whole numbers, everyday range (stock counts, ages) |
-| `BIGINT` | Whole numbers, very large range |
-| `DECIMAL(p,s)` / `NUMERIC(p,s)` | Exact decimal numbers — **always use for money** |
-| `SERIAL` | Auto-incrementing integer — what we used for `product_id` |
+| Type | Use for | Example value |
+|---|---|---|
+| `INTEGER` | Whole numbers, everyday range (stock counts, ages) | `500` |
+| `BIGINT` | Whole numbers, very large range | `9007199254740992` |
+| `DECIMAL(p,s)` / `NUMERIC(p,s)` | Exact decimal numbers — **always use for money** | `1199.00` |
+| `SERIAL` | Auto-incrementing integer — what we used for `product_id` | `1`, `2`, `3`... (assigned automatically) |
+
+#### Deep dive: `DECIMAL` / `NUMERIC`, explained properly
+
+`DECIMAL` and `NUMERIC` are **exactly the same type in PostgreSQL** — just two
+names for one thing. Both take two numbers in parentheses: `DECIMAL(p, s)`.
+
+- **`p` = precision** — the *total* number of significant digits stored, on
+  both sides of the decimal point combined.
+- **`s` = scale** — how many of those digits sit *after* the decimal point.
+
+So `DECIMAL(10, 2)` (what we used for `price`) means: 10 digits total, 2 of
+them after the decimal point — leaving 8 digits before it. That's a maximum
+value of `99999999.99`, far more than any real product will ever cost.
+
+**More examples, worked out:**
+
+| Declared as | Digits before decimal | Digits after decimal | Max value | Example stored value |
+|---|---|---|---|---|
+| `DECIMAL(5,2)` | 3 | 2 | `999.99` | `249.00` (AirPods Pro's price) |
+| `DECIMAL(4,0)` | 4 | 0 | `9999` | `500` (a whole number, no cents at all) |
+| `DECIMAL(6,3)` | 3 | 3 | `999.999` | `12.345` (extra decimal precision, e.g. a measurement) |
+| `DECIMAL(10,2)` | 8 | 2 | `99999999.99` | `1199.00` (our `products.price` column) |
+
+**What happens with "too many" digits?** PostgreSQL treats the two sides
+differently:
+
+```sql
+CREATE TABLE test_pricing (amount DECIMAL(5,2));
+
+INSERT INTO test_pricing VALUES (12.345);
+-- Stored as 12.35 — PostgreSQL ROUNDS extra decimal digits to fit the scale
+
+INSERT INTO test_pricing VALUES (1234.56);
+-- ERROR: numeric field overflow
+-- 1234 has 4 digits before the decimal, but DECIMAL(5,2) only allows 3 (5 - 2 = 3)
+```
+
+- Too many digits **after** the decimal point → silently **rounded** to fit.
+- Too many digits **before** the decimal point → **rejected outright** with an
+  error, since there's no safe way to "round" away a whole digit of magnitude.
+
+**Why not just use `FLOAT`/`REAL` instead?** Floating-point numbers store
+values in binary, and most decimal fractions (like `0.10`) can't be
+represented *exactly* in binary — only approximated. This is a famous, very
+real gotcha:
+
+```sql
+SELECT 0.1::float + 0.2::float;
+-- Returns 0.30000000000000004, NOT exactly 0.3
+
+SELECT 0.1::decimal + 0.2::decimal;
+-- Returns exactly 0.3
+```
+
+For a single price this rounding error looks harmless — but multiply it
+across millions of transactions (every order, every line item, every
+discount calculation) and those tiny errors accumulate into real,
+un-reconcilable accounting mismatches. This is exactly why
+[Lesson 2.2](02-your-first-database-apple-example.md) declared
+`price DECIMAL(10,2)` and not `price FLOAT` — this single type choice is one
+of the most important habits to carry into every real schema you design.
 
 ### Text
 
-| Type | Use for |
-|---|---|
-| `TEXT` | Any length of text, no limit — the simplest default choice |
-| `VARCHAR(n)` | Text capped at `n` characters |
-| `CHAR(n)` | Fixed-length text, padded with spaces — rarely needed today |
+| Type | Use for | Example value |
+|---|---|---|
+| `TEXT` | Any length of text, no limit — the simplest default choice | `'iPhone 17 Pro'` |
+| `VARCHAR(n)` | Text capped at `n` characters | `VARCHAR(20)` → `'smartphone'` |
+| `CHAR(n)` | Fixed-length text, padded with spaces — rarely needed today | `CHAR(2)` → `'US'` |
 
 ### Boolean
 
-| Type | Use for |
-|---|---|
-| `BOOLEAN` | `TRUE` / `FALSE` values only |
+| Type | Use for | Example value |
+|---|---|---|
+| `BOOLEAN` | `TRUE` / `FALSE` values only | `TRUE` (e.g., `in_stock`) |
 
 ### Date / Time
 
-| Type | Use for |
-|---|---|
-| `DATE` | A calendar date only, no time (e.g., a birthday) |
-| `TIME` | A time only, no date |
-| `TIMESTAMP` | Date + time together — what we used for `created_at`/`updated_at` |
-| `TIMESTAMPTZ` | Date + time, timezone-aware — usually the *safer* real-world choice |
-| `INTERVAL` | A span of time (e.g., "3 days", "2 hours") |
+| Type | Use for | Example value |
+|---|---|---|
+| `DATE` | A calendar date only, no time (e.g., a birthday) | `'2026-02-01'` |
+| `TIME` | A time only, no date | `'14:30:00'` |
+| `TIMESTAMP` | Date + time together — what we used for `created_at`/`updated_at` | `'2026-02-01 14:30:00'` |
+| `TIMESTAMPTZ` | Date + time, timezone-aware — usually the *safer* real-world choice | `'2026-02-01 14:30:00+07'` |
+| `INTERVAL` | A span of time (e.g., "3 days", "2 hours") | `INTERVAL '3 days'` |
 
 ### PostgreSQL-Special
 
-| Type | Use for |
-|---|---|
-| `UUID` | A globally unique ID, not just unique within one table |
-| `JSONB` | Structured, flexible data stored inside a relational column (bridges to [Module 07 NoSQL concepts](../01-fundamentals/03-types-of-databases.md)) |
-| `ARRAY` | A list of values in a single column |
-| `ENUM` | A fixed, named set of allowed values (e.g., `'small', 'medium', 'large'`) |
+| Type | Use for | Example value |
+|---|---|---|
+| `UUID` | A globally unique ID, not just unique within one table | `'a1b2c3d4-1234-5678-9abc-def012345678'` |
+| `JSONB` | Structured, flexible data stored inside a relational column (bridges to [Module 07 NoSQL concepts](../01-fundamentals/03-types-of-databases.md)) | `'{"color": "black", "storage_gb": 256}'` |
+| `ARRAY` | A list of values in a single column | `ARRAY['red', 'blue', 'green']` |
+| `ENUM` | A fixed, named set of allowed values (e.g., `'small', 'medium', 'large'`) | `'medium'` (from a `size_enum` type) |
 
 ## Step 3 — Back to our products table
 
