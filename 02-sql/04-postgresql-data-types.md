@@ -173,4 +173,4 @@ types, needs a quick check whenever you switch engines.
   check the specific engine's docs when switching.
 
 ---
-← [2.3 Types of SQL Queries](03-types-of-sql-queries.md)
+← [2.3 Types of SQL Queries](03-types-of-sql-queries.md) | Next: [2.5 Operators →](05-operators.md)
