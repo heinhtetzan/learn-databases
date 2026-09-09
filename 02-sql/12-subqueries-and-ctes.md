@@ -2,9 +2,30 @@
 
 # 2.12 Subqueries & CTEs
 
-Some questions naturally break into steps: *"first find X, then use it to
-find Y."* Subqueries and CTEs let you write that directly in SQL, using the
-same `customers`/`orders`/`order_items`/`products` schema from
+Before any syntax, 3 real-world questions that naturally break into steps.
+
+## 3 real-world scenarios
+
+**1. A shop** asks *"which products are priced above our own average
+price?"* — you can't answer that in one glance; you first need the average
+computed, then compare every product against it.
+
+**2. A university** wants *"students with no failing grades"* — that means
+checking each student against a whole separate table of grades, not
+comparing against one fixed value.
+
+**3. A hospital** builds a report in two steps: first compute each doctor's
+current patient count, then filter down to only the doctors above a certain
+caseload — the second step depends entirely on the first being computed
+already.
+
+## Why subqueries and CTEs
+
+Each scenario needs an intermediate result — an average, a check against
+another table, a computed count — used *inside* a bigger query. Subqueries
+and CTEs let you write that directly in SQL: *"first find X, then use it to
+find Y."* Every example below uses the same
+`customers`/`orders`/`order_items`/`products` schema from
 [Lesson 2.10](10-relationships-and-foreign-keys.md).
 
 ## Step 1 — A subquery in `WHERE`

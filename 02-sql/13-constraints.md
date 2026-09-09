@@ -2,9 +2,33 @@
 
 # 2.13 Constraints
 
-You've used `PRIMARY KEY`, `REFERENCES`, `UNIQUE`, `CHECK`, `NOT NULL`, and
-`DEFAULT` informally since [Lesson 2.2](02-your-first-database-apple-example.md).
-Let's formalize each one, and notice something we've been missing.
+Before formalizing anything, 3 real-world rules that must never be broken —
+no matter what application code tries to do.
+
+## 3 real-world scenarios
+
+**1. A bank** must never let an account balance column silently go negative
+— not because the application always checks first, but because the database
+itself refuses to store an impossible value, even if a bug tries to write one.
+
+**2. A hospital** must never let two staff records share the same medical
+license number — a duplicate would make it impossible to tell which record
+is the real one during an audit.
+
+**3. A shop** must never let an order reference a product ID that doesn't
+exist — otherwise a typo in one script could quietly create phantom line
+items pointing at nothing.
+
+## Why constraints, not just careful code
+
+Every one of these rules could theoretically be checked in application
+code — but "we'll remember to check" fails the moment there's a second script,
+a rushed migration, or a bug. You've used `PRIMARY KEY`, `REFERENCES`,
+`UNIQUE`, `CHECK`, `NOT NULL`, and `DEFAULT` informally since
+[Lesson 2.2](02-your-first-database-apple-example.md) — these are exactly
+how the database enforces rules like the 3 above, permanently, regardless of
+what code tries to do. Let's formalize each one, and notice something we've
+been missing.
 
 ## Step 1 — `PRIMARY KEY`: uniquely identifies each row
 

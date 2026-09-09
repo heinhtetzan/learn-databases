@@ -3,8 +3,28 @@
 # 2.5 Operators
 
 Every query so far has either grabbed *everything* or matched one exact row.
-Now let's properly filter — the thing you'll do in almost every query you
-ever write.
+Before the syntax, 3 real-world situations that need something in between.
+
+## 3 real-world scenarios
+
+**1. An online store's "Under $50" filter** — a shopper doesn't want every
+product, just the ones cheap enough to qualify. Someone has to narrow down
+the full catalog to exactly that subset.
+
+**2. A university directory search** — typing "Al" should surface every
+student whose name starts with those letters, without knowing the exact
+full name in advance.
+
+**3. A hospital follow-up list** — find every patient record that's missing
+a recorded blood type, so staff can reach out and fill the gap. There's no
+exact value to match against here — you're looking for what's *absent*.
+
+## Why filtering matters
+
+Each scenario needs to narrow a full table down to just the rows that matter
+for one specific question — "cheap enough," "starts with these letters,"
+"missing this value." That's exactly what filtering is for — the thing
+you'll do in almost every query you ever write.
 
 ## Step 0 — Where our data stands right now
 

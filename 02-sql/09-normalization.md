@@ -2,10 +2,32 @@
 
 # 2.9 Normalization
 
-Everything so far has lived in one table: `products`. Real systems need more
-— customers, orders, what was ordered. Before writing any new `CREATE TABLE`,
-let's understand *why* you split data across multiple tables instead of just
-adding more columns to one giant table.
+Everything so far has lived in one table: `products`. Real systems need more.
+Before any `CREATE TABLE`, 3 real-world situations where a single flat table
+breaks down.
+
+## 3 real-world scenarios
+
+**1. A shop's** flat order spreadsheet repeats a customer's name and email on
+every single line item they've ever ordered — change that customer's email,
+and you must find and update every one of those repeated rows.
+
+**2. A hospital's** flat patient chart repeats each doctor's phone number and
+office number on every visit record — if a doctor changes offices, that
+detail needs updating in hundreds of old visit rows, not just one place.
+
+**3. A university's** flat enrollment sheet repeats a course's credit-hours
+and department on every single student row enrolled in it — a course
+correction (say, going from 3 to 4 credit hours) means hunting down and
+fixing every student's row for that course.
+
+## Why this breaks down
+
+All 3 scenarios share one root cause: the same fact (a customer's email, a
+doctor's office, a course's credit hours) is copied across many rows instead
+of living in exactly one place. **Normalization** is the process of
+restructuring tables to fix exactly this. Let's work through scenario 1 — the
+shop — in full detail.
 
 ## Step 1 — Start with one flat, "obvious" table
 

@@ -2,9 +2,32 @@
 
 # 2.10 Relationships & Foreign Keys
 
-[Lesson 2.9](09-normalization.md) ended with an ER diagram: `customers`,
-`orders`, `order_items`, and `products`. Let's turn that into real,
-running SQL.
+Before any SQL, 3 real-world situations where a relationship *must* be
+enforced, not just assumed.
+
+## 3 real-world scenarios
+
+**1. A shop** must never let an order reference a customer that doesn't
+exist — a bug that creates an order with a typo'd or deleted customer ID
+would silently corrupt every report built on top of it.
+
+**2. A hospital** must never let an appointment reference a doctor who has
+left the practice — and needs a deliberate decision about what happens to
+old appointment records when that doctor's record is removed.
+
+**3. A university's** enrollment record must always point to a real,
+currently-offered course — an enrollment referencing a cancelled or
+nonexistent course ID would mean a student is "taking" something that
+doesn't exist.
+
+## Why relationships need enforcement, not just good intentions
+
+In every scenario, "the application will just be careful" isn't good enough
+— a single bug, script, or rushed migration could break the rule instantly,
+with nobody noticing until reports are already wrong. [Lesson 2.9](09-normalization.md)
+ended with an ER diagram: `customers`, `orders`, `order_items`, and
+`products`. Let's turn that into real, running SQL — with the database
+itself enforcing these relationships, not just documenting them.
 
 ## Step 1 — One-to-many: `customers` → `orders`
 

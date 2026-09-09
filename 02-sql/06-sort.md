@@ -3,7 +3,26 @@
 # 2.6 Sort
 
 Now that you can filter rows with [Operators](05-operators.md), let's control
-the **order** they come back in — and how to grab just a slice of them.
+the **order** they come back in. Before the syntax, 3 real-world situations.
+
+## 3 real-world scenarios
+
+**1. An online store's "Price: Low to High"** button — shoppers expect the
+cheapest item first, not whatever order the database happens to store rows
+in internally.
+
+**2. A game leaderboard** — the highest scorer must appear at the very top,
+every time, for every player who opens it.
+
+**3. A news site's homepage** — articles must show newest first, so a
+reader's most recent visit surfaces what actually changed since last time.
+
+## Why sorting matters
+
+None of these are about *which* rows come back — that's filtering
+([Lesson 2.5](05-operators.md)). They're about the **order** those rows
+appear in, and, often, only showing a *slice* of them (the top score, the
+newest article). That's what this lesson covers.
 
 ## Step 0 — Same data as before
 

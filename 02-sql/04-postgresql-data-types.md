@@ -2,14 +2,32 @@
 
 # 2.4 Data Types in PostgreSQL
 
-Every column you create needs a **data type** — you've already picked a few
-without much explanation in [Lesson 2.2](02-your-first-database-apple-example.md)
-(`TEXT`, `DECIMAL(10,2)`, `INTEGER`, `TIMESTAMP`). Let's slow down and look at
-what's actually available, and an important reminder about switching engines.
+Every column you create needs a **data type**. Before the list, 3 real-world
+situations where the *wrong* type causes a real problem.
 
-## Step 1 — What a data type actually controls
+## 3 real-world scenarios
 
-A column's type controls 3 things at once:
+**1. An online store's checkout** must never let `price` hold the text
+`"free"` or `"TBD"` — if the column allows any value at all, a bug or bad
+import can silently corrupt every total and report built on top of it.
+
+**2. A hospital's patient record** must never let `date_of_birth` hold
+something like `"a long time ago"` — age calculations, appointment
+scheduling, and legal record-keeping all depend on it being a real,
+comparable date.
+
+**3. A social media profile's** `is_verified` badge is just true or false —
+storing it as free text (`"yes"`, `"Yes"`, `"verified"`, `"1"`) means every
+single query checking it has to account for every spelling anyone ever used.
+
+## What a data type actually controls
+
+Each scenario above is really the same failure: a column that *should* only
+hold one specific kind of value was allowed to hold anything. A data type is
+how you prevent that — you've already picked a few without much explanation
+in [Lesson 2.2](02-your-first-database-apple-example.md) (`TEXT`,
+`DECIMAL(10,2)`, `INTEGER`, `TIMESTAMP`). A column's type controls 3 things
+at once:
 1. **What values are allowed** — a `BOOLEAN` column can only ever hold
    true/false; it will reject the text `"maybe"`.
 2. **How it's stored** — an `INTEGER` takes a fixed 4 bytes; a `TEXT` value's
@@ -18,7 +36,7 @@ A column's type controls 3 things at once:
    `TEXT`; you can compare `DATE`s chronologically, but not two arbitrary
    pieces of text that way.
 
-## Step 2 — PostgreSQL's data types, grouped
+## Step 1 — PostgreSQL's data types, grouped
 
 ![PostgreSQL Data Types, Grouped](../assets/images/postgres-data-types.png)
 
@@ -125,7 +143,7 @@ of the most important habits to carry into every real schema you design.
 | `ARRAY` | A list of values in a single column | `ARRAY['red', 'blue', 'green']` |
 | `ENUM` | A fixed, named set of allowed values (e.g., `'small', 'medium', 'large'`) | `'medium'` (from a `size_enum` type) |
 
-## Step 3 — Back to our products table
+## Step 2 — Back to our products table
 
 ```sql
 CREATE TABLE products (
@@ -142,7 +160,7 @@ CREATE TABLE products (
 Every single column from Lesson 2.2 maps cleanly onto one of the 5 groups
 above.
 
-## Step 4 — Important reminder: types differ by database engine
+## Step 3 — Important reminder: types differ by database engine
 
 Back in [Lesson 2.1](01-what-is-sql.md), we said SQL "transfers" across
 PostgreSQL, MySQL, SQL Server, and Oracle. That's true for the *core language*
@@ -164,7 +182,7 @@ example (MySQL treats it as `TINYINT(1)` under the hood). The *skill* of
 writing SQL transfers easily; the *exact syntax*, especially around data
 types, needs a quick check whenever you switch engines.
 
-## Step 5 — Recap
+## Step 4 — Recap
 
 - A data type controls what's allowed, how it's stored, and what operations work.
 - PostgreSQL groups types into: Numeric, Text, Boolean, Date/Time, and

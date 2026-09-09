@@ -2,9 +2,30 @@
 
 # 2.16 Views
 
+Before any code, 3 real-world situations where the same complex query gets
+run over and over.
+
+## 3 real-world scenarios
+
+**1. A finance team** runs "monthly revenue by region" constantly — a
+multi-table join and calculation, rewritten from scratch (or copy-pasted,
+and slowly drifting out of sync) every single time someone needs it.
+
+**2. A hospital dashboard** always needs "today's appointments, with doctor
+and patient names" — the same 3-table join, shown fresh every time a nurse
+opens the screen.
+
+**3. An admin panel** wants to expose a safe "public profile" of each user —
+name and join date, but never their password hash or private email — to
+tools that shouldn't see the raw `users` table at all.
+
+## What a view is, and why it helps
+
 A **view** is a saved query that you can `SELECT` from as if it were an
 ordinary table — the underlying tables are only actually queried each time
-you use the view; nothing is duplicated or stored twice.
+you use the view; nothing is duplicated or stored twice. It solves all 3
+scenarios above: write the complex query once, reuse it by name everywhere,
+and optionally hide columns nobody outside the team should see.
 
 ## Step 1 — Where our data stands after Lesson 2.14
 

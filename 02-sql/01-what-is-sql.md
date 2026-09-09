@@ -1,7 +1,27 @@
 # 2.1 What Is SQL?
 
-Welcome to Part 1 of the course — everything here uses **PostgreSQL**. Let's
-start slow, one step at a time.
+Welcome to Part 1 of the course — everything here uses **PostgreSQL**. Before
+any definitions, 3 real-world moments where someone actually needs SQL.
+
+## 3 real-world scenarios
+
+**1. A shop owner** wants to know "which products sold over $1,000 last
+month?" — that answer is sitting somewhere in their database, but they need
+a way to actually ask the question.
+
+**2. A university admin** needs to email every student enrolled in a
+specific course — again, the data exists, but pulling out exactly that list
+by hand from thousands of records isn't realistic.
+
+**3. A hospital app** needs to update a patient's contact info the moment
+they confirm a new phone number — some precise, reliable way to change
+exactly that one record, without touching anyone else's.
+
+## What connects all 3
+
+Each scenario needs to *ask* a relational database something, or *tell* it to
+change something — precisely, not by scrolling through spreadsheets by hand.
+SQL is that shared language. Let's start slow, one step at a time.
 
 ## Step 1 — What SQL stands for
 

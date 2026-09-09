@@ -2,9 +2,23 @@
 
 # 2.14 Transactions
 
-Placing one order actually takes **3 separate statements**: insert the order,
-insert its line items, and reduce stock. What guarantees all 3 happen
-together, or not at all?
+Before any code, 3 real-world situations that need several steps to happen
+together, or not at all.
+
+## 3 real-world scenarios
+
+**1. A bank transfer** must debit one account and credit another together —
+if the system crashes right after the debit but before the credit, that
+money must not simply vanish.
+
+**2. An airline booking** must reserve a seat and charge the card together —
+if the payment fails, the seat reservation must undo itself too, not sit
+held forever for a booking that was never actually paid for.
+
+**3. A shop's checkout** must create the order and reduce stock together —
+placing one order actually takes **3 separate statements**: insert the
+order, insert its line items, and reduce stock. What guarantees all 3
+happen together, or not at all?
 
 ## Step 1 — The problem, concretely
 

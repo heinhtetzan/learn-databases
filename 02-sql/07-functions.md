@@ -2,10 +2,30 @@
 
 # 2.7 Functions
 
-A **function** takes some input and computes an output — SQL has built-in
-functions for aggregating, reshaping text, doing math, and working with
-dates. Let's meet the core ones before putting the most important group —
-aggregate functions — to real use in the next lesson.
+Before any syntax, 3 real-world situations that need to *compute* something
+from stored data, not just retrieve it as-is.
+
+## 3 real-world scenarios
+
+**1. A finance app** computes a loan's monthly interest rate from raw
+numbers, then must round it to exactly 2 decimal places before showing it to
+a customer — showing 14 decimal places would look broken.
+
+**2. A search bar** needs "Apple", "APPLE", and "apple" to all match the same
+stored product — comparing text exactly as typed would miss two out of three.
+
+**3. A membership app's "member since"** badge needs to turn a stored signup
+date into something readable like *"member for 7 months"* — the raw date
+alone doesn't say that.
+
+## What a function is, and why you need one
+
+A **function** takes some input and computes an output — none of the 3
+scenarios above can be solved by just reading a stored value as-is; each one
+needs a calculation, a transformation, or a comparison performed *on* that
+value. SQL has built-in functions for aggregating, reshaping text, doing
+math, and working with dates. Let's meet the core ones before putting the
+most important group — aggregate functions — to real use in the next lesson.
 
 ## Step 1 — Aggregate functions
 

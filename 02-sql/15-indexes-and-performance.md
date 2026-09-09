@@ -3,8 +3,26 @@
 # 2.15 Indexes & Performance
 
 Every query so far has run instantly — our tables have a handful of rows.
-Real tables have millions. This lesson is about *why* queries stay fast (or
-don't) at that scale.
+Real tables have millions. Before any code, 3 real-world situations where
+that difference actually matters.
+
+## 3 real-world scenarios
+
+**1. A search engine** finds one specific email address among a billion
+records in a fraction of a second — reading every record one by one simply
+isn't an option at that scale.
+
+**2. A shop's product search** must not take minutes to find items matching
+a typed-in name, even once the catalog grows to millions of products.
+
+**3. A hospital's records system** must pull up one patient's full chart
+instantly, the moment a doctor types in their ID — during an emergency, a
+slow lookup isn't just inconvenient, it's dangerous.
+
+## Why performance matters at scale
+
+This lesson is about *why* queries stay fast (or don't) as data grows toward
+the scale of all 3 scenarios above.
 
 ## Step 1 — The problem: scanning is slow at scale
 

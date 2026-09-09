@@ -3,19 +3,34 @@
 # 2.3 Types of SQL Queries
 
 You've already used `CREATE`, `INSERT`, `SELECT`, `UPDATE`, and `DELETE` in
-[Lesson 2.2](02-your-first-database-apple-example.md). It turns out SQL groups
-every command into 5 named categories based on *what job it does*. Let's go
-through them one at a time.
+[Lesson 2.2](02-your-first-database-apple-example.md). Before the names,
+3 real-world situations that need very different *kinds* of commands.
 
-## Step 1 — Why categorize commands at all
+## 3 real-world scenarios
 
-Not every SQL command does the same *kind* of thing. Some define the shape of
-your data, some change the data itself, some just read it, some control who's
-allowed to do what, and some manage safety around groups of commands. Knowing
-the category tells you immediately what a command is capable of — e.g., "this
-is DDL" instantly tells you it changes structure, not data.
+**1. A bank** sets up a new `accounts` table once when the system launches,
+then processes thousands of deposits and withdrawals every single day — two
+completely different jobs: defining the table's shape, versus changing the
+data inside it.
 
-## Step 2 — DDL: Data Definition Language
+**2. A hospital IT admin** grants a new nurse permission to *read* patient
+records, but not to *delete* them — a job about controlling who can do what,
+separate from the data itself.
+
+**3. An airline booking system** must reserve a seat, charge a card, and
+confirm the booking as one all-or-nothing unit — if the payment fails, the
+seat reservation must undo itself too, not stay half-completed.
+
+## Why categorize commands at all
+
+Each scenario above needed a different *kind* of command: shaping a table's
+structure, changing its data, controlling access, or grouping several steps
+safely. Knowing a command's category tells you immediately what it's capable
+of — e.g., "this is DDL" instantly tells you it changes structure, not data.
+SQL groups every command into 5 such categories. Let's go through them one at
+a time.
+
+## Step 1 — DDL: Data Definition Language
 
 Defines and changes the **structure** — tables, columns, constraints. You've
 already used this in [Lesson 2.2](02-your-first-database-apple-example.md):
@@ -31,7 +46,7 @@ already used this in [Lesson 2.2](02-your-first-database-apple-example.md):
 CREATE TABLE products (...);   -- from Lesson 2.2, Step 2
 ```
 
-## Step 3 — DML: Data Manipulation Language
+## Step 2 — DML: Data Manipulation Language
 
 Changes the **data itself**, not the structure. Also from Lesson 2.2:
 
@@ -45,7 +60,7 @@ Changes the **data itself**, not the structure. Also from Lesson 2.2:
 INSERT INTO products (...) VALUES (...);   -- from Lesson 2.2, Step 3
 ```
 
-## Step 4 — DQL: Data Query Language
+## Step 3 — DQL: Data Query Language
 
 Just **reads** data — never changes anything. Technically just one command:
 
@@ -61,7 +76,7 @@ SELECT * FROM products;   -- from Lesson 2.2, Step 4
 > category. Both are fine — the useful distinction to remember is simply:
 > DML *writes*, DQL only *reads*.
 
-## Step 5 — DCL: Data Control Language
+## Step 4 — DCL: Data Control Language
 
 Controls **who is allowed** to do what — permissions, not data:
 
@@ -75,7 +90,7 @@ GRANT SELECT ON products TO analyst_role;
 REVOKE DELETE ON products FROM analyst_role;
 ```
 
-## Step 6 — TCL: Transaction Control Language
+## Step 5 — TCL: Transaction Control Language
 
 Groups multiple statements so they succeed or fail **together** — you saw a
 preview of this idea in [Lesson 2.2](02-your-first-database-apple-example.md)'s
@@ -95,11 +110,11 @@ INSERT INTO orders (...) VALUES (...);
 COMMIT;   -- or ROLLBACK to undo both statements above
 ```
 
-## Step 7 — See all five together
+## Step 6 — See all five together
 
 ![Types of SQL Queries](../assets/images/sql-query-types.png)
 
-## Step 8 — Recap table
+## Step 7 — Recap table
 
 | Category | Stands for | Example commands | Affects |
 |---|---|---|---|

@@ -2,10 +2,29 @@
 
 # 2.8 Group
 
+Before any syntax, 3 real-world situations that need a summary *per group*,
+not one summary for everything.
+
+## 3 real-world scenarios
+
+**1. A shop** doesn't just want total sales overall — it wants total sales
+**per category**, to see which category is actually driving revenue.
+
+**2. A university** wants the average GPA **per department**, not one
+average across every student in the school — a single overall number would
+hide which departments are actually struggling.
+
+**3. A hospital** wants the number of patients **per doctor**, to see who's
+overloaded and who has room for more appointments.
+
+## Why `GROUP BY`
+
 [Lesson 2.7](07-functions.md) used `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` to
-collapse the **entire** `products` table into one summary row. `GROUP BY`
-gets you one summary row **per category** instead — the same functions,
-bucketed.
+collapse the **entire** table into one summary row — but none of the 3
+scenarios above want *one* number; they want one number **per bucket**
+(category, department, doctor). `GROUP BY` does exactly that: the same
+aggregate functions, applied separately to each group instead of the whole
+table at once.
 
 ## Step 0 — Same data as before
 
@@ -20,9 +39,9 @@ bucketed.
 | 10 | Mac Mini | desktop | 599.00 | 450 |
 | 11 | iPhone 17 | smartphone | 999.00 | 600 |
 
-## Step 1 — Why `GROUP BY`
+## Step 1 — `GROUP BY` in practice
 
-Question: *"how many products do we have in each category?"* Without
+Take scenario 1: *"how many products do we have in each category?"* Without
 `GROUP BY`, you'd have to run `SELECT * FROM products`, then count by eye,
 category by category. `GROUP BY` does this in one statement:
 

@@ -3,8 +3,52 @@
 # 2.11 Joins
 
 This is the single most important skill for querying real, related data.
+Before any code, 3 real-world situations where you'd need one.
+
+## 3 real-world scenarios
+
+**1. A shop** keeps a `customers` table (name, email) and a separate `orders`
+table (what was bought, when). Neither table alone can answer *"what has
+Alice ordered?"* — `customers` doesn't know about orders, and `orders` only
+knows a customer *ID*, not a name. You need her row from `customers` **and**
+her rows from `orders`, matched together, to answer that.
+
+**2. A university** keeps a `students` table and a `courses` table, connected
+through an `enrollments` table (which student is in which course). To answer
+*"who is enrolled in Database 101?"*, you need all three — students and
+courses never touch each other directly; the enrollment table is the bridge
+between them.
+
+**3. A hospital** keeps a `patients` table, a `doctors` table, and an
+`appointments` table linking the two. To answer *"which patients does
+Dr. Smith see this week?"*, you need `appointments` matched to `doctors` (to
+find which appointments belong to Dr. Smith) and to `patients` (to get their
+names) — three tables, each holding one piece of a question that spans all
+of them.
+
+## What a join actually is
+
+Given those 3 scenarios: a **join** combines rows from two (or more) tables
+into one result, matched by a shared piece of information — usually an ID
+that one table stores as a foreign key pointing at another (exactly what
+[Lesson 2.10](10-relationships-and-foreign-keys.md) set up). In scenario 1,
+that shared ID is the customer ID sitting on every order; in scenario 3, it's
+the doctor ID and patient ID sitting on every appointment.
+
+## Why joins exist at all
+
+[Lesson 2.9](09-normalization.md) split one messy table into several clean
+ones specifically to stop repeating the same information everywhere. But that
+means the *pieces* of any real answer — like all 3 scenarios above — now live
+in different tables. A join is simply how you put those pieces back together
+for one specific question, without undoing the normalization that keeps the
+data clean.
+
+## Now, the same idea in SQL
+
 Every example below runs against the exact schema and data from
-[Lesson 2.10](10-relationships-and-foreign-keys.md).
+[Lesson 2.10](10-relationships-and-foreign-keys.md) — our own version of the
+"shop" scenario above: `customers`, `orders`, `order_items`, and `products`.
 
 ## Step 0 — The data we're working with
 
