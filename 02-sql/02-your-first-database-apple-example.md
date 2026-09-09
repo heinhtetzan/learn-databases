@@ -260,4 +260,4 @@ That's the complete lifecycle of data in SQL — and every database you'll ever
 build starts with exactly these same 6 steps.
 
 ---
-← [2.1 What Is SQL?](01-what-is-sql.md)
+← [2.1 What Is SQL?](01-what-is-sql.md) | Next: [2.3 Types of SQL Queries →](03-types-of-sql-queries.md)

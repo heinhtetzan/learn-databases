@@ -64,3 +64,6 @@ means you can work with almost any relational database, not just one brand.
 
 Next, we'll actually get PostgreSQL installed and running so you can type your
 first real query.
+
+---
+Next: [2.2 Your First Database →](02-your-first-database-apple-example.md)
