@@ -143,4 +143,4 @@ principle from schema design.
 | Updatable views | Only works for simple, single-table views — not ones with joins/`GROUP BY` |
 
 ---
-← [2.15 Indexes & Performance](15-indexes-and-performance.md) | Next: [2.17 Capstone →](17-capstone.md)
+← [2.15 Indexes & Performance](15-indexes-and-performance.md) | Next: [2.17 Create Tables: More Examples →](17-create-tables-examples.md)

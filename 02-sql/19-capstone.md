@@ -1,6 +1,6 @@
-← [2.16 Views](16-views.md)
+← [2.18 User & Access Management](18-user-access-management.md)
 
-# 2.17 Capstone: Product Reviews
+# 2.19 Capstone: Product Reviews
 
 One last feature, built end to end with everything from Part 1: the Apple
 Store wants **product reviews**. Let's design, build, and query it —
@@ -146,33 +146,17 @@ Only 2 of our 8 products clear **both** bars — everything else is either
 below-average revenue, below-average rating, or has no rating at all to
 compare.
 
-## Step 8 — The whole of Part 1, recapped
+## Step 8 — One last access-control touch (User Management)
 
-| Lesson | Topic |
-|---|---|
-| 2.1 | What Is SQL? |
-| 2.2 | Your First Database |
-| 2.3 | Types of SQL Queries |
-| 2.4 | Data Types in PostgreSQL |
-| 2.5 | Operators |
-| 2.6 | Sort |
-| 2.7 | Functions |
-| 2.8 | Group |
-| 2.9 | Normalization |
-| 2.10 | Relationships & Foreign Keys |
-| 2.11 | Joins |
-| 2.12 | Subqueries & CTEs |
-| 2.13 | Constraints |
-| 2.14 | Transactions |
-| 2.15 | Indexes & Performance |
-| 2.16 | Views |
-| 2.17 | Capstone (this lesson) |
+Following [Lesson 2.18](18-user-access-management.md), extend `app_user`'s
+permissions to cover the new table:
 
-That's a complete, practical PostgreSQL foundation — from "what is a
-database" to a real, multi-table, constraint-enforced, indexed schema you
-built and queried yourself. Part 2 moves to **MongoDB**, where several of
-these same problems (relationships, structure, consistency) get solved with a
-very different set of tools.
+```sql
+GRANT SELECT, INSERT ON reviews TO app_user;   -- no UPDATE/DELETE — reviews are immutable once posted
+```
+
+That's every skill from Part 1, used together on one real feature — design,
+build, secure, and query it, end to end.
 
 ---
-← [2.16 Views](16-views.md)
+← [2.18 User & Access Management](18-user-access-management.md) | Next: [2.20 Part 1 Conclusion →](20-conclusion.md)
