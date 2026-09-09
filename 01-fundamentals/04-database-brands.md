@@ -99,4 +99,4 @@ between them cover the two mindsets you need: strict, related tables
 (PostgreSQL) vs. flexible, nested documents (MongoDB).
 
 ---
-← [1.3 Types of Databases](03-types-of-databases.md)
+← [1.3 Types of Databases](03-types-of-databases.md) | Next: [1.5 Installing PostgreSQL & MongoDB →](05-installation.md)

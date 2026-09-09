@@ -1,3 +1,5 @@
+← [1.7 Connecting with a GUI](../01-fundamentals/07-gui-tools.md)
+
 # 2.1 What Is SQL?
 
 Welcome to Part 1 of the course — everything here uses **PostgreSQL**. Before
