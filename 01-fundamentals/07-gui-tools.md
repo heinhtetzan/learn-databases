@@ -98,7 +98,7 @@ username/password needed for a default local setup.
 
 Both tools are optional — everything in this course still works entirely
 from the command line (`psql`, `mongosh`) if you'd rather stay there. Use
-whichever feels more comfortable as you move into [Part 1 — SQL](../02-sql/01-what-is-sql.md).
+whichever feels more comfortable.
 
 ---
-← [1.6 Running with Docker](06-run-with-docker.md) | Next: [2.1 What Is SQL? →](../02-sql/01-what-is-sql.md)
+← [1.6 Running with Docker](06-run-with-docker.md) | Next: [1.8 Module 1 Conclusion →](08-conclusion.md)

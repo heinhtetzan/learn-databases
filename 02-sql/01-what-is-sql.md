@@ -1,4 +1,4 @@
-← [1.7 Connecting with a GUI](../01-fundamentals/07-gui-tools.md)
+← [1.8 Module 1 Conclusion](../01-fundamentals/08-conclusion.md)
 
 # 2.1 What Is SQL?
 
