@@ -52,6 +52,17 @@ LEFT JOIN order_items oi ON oi.order_id = o.order_id
 GROUP BY c.customer_id, c.name;
 ```
 
+```mermaid
+flowchart LR
+    App["App / report /\nteammate's query"] -->|"SELECT * FROM\ncustomer_order_summary"| View["View\n(saved query, no stored data)"]
+    View -->|runs the real join every time| T1[(customers)]
+    View --> T2[(orders)]
+    View --> T3[(order_items)]
+```
+
+Nothing about `customers`/`orders`/`order_items` changes — the view is just a
+named shortcut that re-runs the same join every time it's queried.
+
 ## Step 3 — Querying a view like a normal table
 
 ```sql

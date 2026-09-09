@@ -31,7 +31,20 @@ UPDATE products SET stock = stock - 2 WHERE product_id = 4;
 If your application crashes, loses its connection, or hits a bug between
 statement 2 and 3, you're left with an order that has line items but stock
 was never reduced — the database now lies about how much you have in stock.
-A **transaction** groups statements so they succeed or fail as **one unit**.
+A **transaction** groups statements so they succeed or fail as **one unit**:
+
+```mermaid
+flowchart TD
+    A[BEGIN] --> B[Run statement 1]
+    B --> C[Run statement 2]
+    C --> D[Run statement 3]
+    D --> E{All statements OK?}
+    E -->|Yes| F[COMMIT\nmakes every change permanent]
+    E -->|No, one failed| G[ROLLBACK\nundoes every change since BEGIN]
+```
+
+There is no in-between outcome — either every statement's effect sticks, or
+none of them do.
 
 ## Step 2 — `BEGIN`, `COMMIT`, `ROLLBACK`
 

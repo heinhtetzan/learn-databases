@@ -30,7 +30,16 @@ Without help, finding matching rows means checking **every single row** — a
 **sequential scan**. `SELECT * FROM order_items WHERE product_id = 4;` on an
 `order_items` table with 10 million rows means up to 10 million comparisons.
 An **index** is a separate, sorted structure PostgreSQL maintains specifically
-to avoid this.
+to avoid this — most commonly shaped as a **B-Tree**:
+
+![B-Tree Index](../assets/images/btree-index.png)
+
+Instead of scanning row by row, PostgreSQL starts at the root, compares the
+value it's looking for, and follows exactly one branch down at each level —
+reaching any row in just a handful of steps, no matter how large the table
+grows. The dashed line along the bottom links every leaf together in sorted
+order too, which is what makes range queries (`BETWEEN`, `>`, `ORDER BY`)
+fast as well, not just exact matches.
 
 ## Step 2 — What's already indexed, and what isn't
 

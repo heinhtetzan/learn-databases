@@ -181,7 +181,15 @@ ORDER BY total_spent DESC;
 rows is `NULL`, not zero — `COALESCE` from [Lesson 2.7](07-functions.md)
 substitutes a real value).
 
-## Step 7 — Recap
+## Step 7 — See all 4 side by side
+
+![The 4 Join Types](../assets/images/join-types-venn.png)
+
+The shaded region is exactly what each join keeps: `INNER JOIN` keeps only
+the overlap; `LEFT`/`RIGHT JOIN` keep one full circle plus the overlap;
+`FULL OUTER JOIN` keeps both circles entirely.
+
+## Step 8 — Recap
 
 | Join type | Keeps unmatched left rows? | Keeps unmatched right rows? |
 |---|---|---|

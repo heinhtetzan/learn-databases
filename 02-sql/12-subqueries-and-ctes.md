@@ -45,7 +45,13 @@ WHERE price > (SELECT AVG(price) FROM products);
 
 The inner query `(SELECT AVG(price) FROM products)` runs first, producing one
 number (972.775 — from [Lesson 2.7](07-functions.md)'s recap of `AVG`), which
-the outer query then compares every row's `price` against.
+the outer query then compares every row's `price` against:
+
+```mermaid
+flowchart LR
+    A["Inner query\nSELECT AVG(price) FROM products"] -->|"produces one value\n(972.775)"| B["Outer query\nWHERE price > 972.775"]
+    B --> C[Final result rows]
+```
 
 ## Step 2 — `IN` with a subquery
 
