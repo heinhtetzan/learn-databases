@@ -85,8 +85,18 @@ picking a specific brand usually comes down to:
 3. **Team familiarity** — the "best" database is often the one your team
    already knows well.
 
-For this course, we'll use **PostgreSQL** for all relational examples — it's
-free, extremely capable, and one of the most in-demand skills in the industry.
+## How this course is split
+
+From here on, this course has **two hands-on parts**, one brand per side:
+
+| Part | Brand | Covers |
+|---|---|---|
+| **Part 1 — SQL** | **PostgreSQL** | Everything relational: tables, keys, SQL queries, joins, transactions |
+| **Part 2 — NoSQL** | **MongoDB** | Everything document-based: flexible schemas, collections, MongoDB's query syntax |
+
+We picked these two because they're free, widely used in real jobs, and
+between them cover the two mindsets you need: strict, related tables
+(PostgreSQL) vs. flexible, nested documents (MongoDB).
 
 ---
 ← [1.3 Types of Databases](03-types-of-databases.md)
