@@ -111,16 +111,21 @@ lesson lives in) — `$(pwd)` resolves to that folder automatically:
 mkdir -p data/postgres data/mongo
 
 docker run --name my-postgres \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_USER=root \
+  -e POSTGRES_PASSWORD=asdffdsa \
   -e POSTGRES_DB=my_store \
   -p 5432:5432 \
   -v "$(pwd)/data/postgres:/var/lib/postgresql/data" \
   -d postgres:16
 
 docker run --name my-mongo \
+  -e MONGO_INITDB_ROOT_USERNAME=root \
+  -e MONGO_INITDB_ROOT_PASSWORD=asdffdsa \
   -p 27017:27017 \
   -v "$(pwd)/data/mongo:/data/db" \
   -d mongo:7
+
+mongodb://root:asdffdsa@127.0.0.1:27017/?authSource=admin
 ```
 
 `-v "$(pwd)/data/postgres:/var/lib/postgresql/data"` says: *"store this
